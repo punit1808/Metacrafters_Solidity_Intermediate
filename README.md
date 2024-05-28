@@ -6,8 +6,11 @@ So, as mentioned before code has mapping, 3 events and 4 helper functions now ge
 Firstly, mapping balances is mapping the account holder's address with it's funds amount present in his/her account. After that 3 events are defined which update the operations deposit, withdraw and tranfer in the blockchain. 
 ### In last 4 helper functions:
 1). deposit => It adds the deposited fund into the sender's address and emit it using Deposit event.
+
 2). withdraw => It withdraws the fund from the sender's address and emit it using Withdraw event.
+
 3). transfer => It adds the deposited fund into the reciever's address and withdraws it from sender's address and emit it using Transfer event.
+
 4). getBalance => It returns the funds available at the provided address.
 
 ## Getting Started
