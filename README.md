@@ -1,15 +1,15 @@
 # My Bank
-This Project basically have a contract of Bank in which we can deposit, withdraw, transfer and can see balance funds in Blockchain. Program is written in Solidity version >=0.8.2 and have mapping between address and amount named balances have 3 events for updation of deposit,transfer and withdraw operations in blockchain and have 4 functions for deposit, transfer, withdraw and getBalance operations.
+This Project basically have a contract of Bank in which we can deposit, withdraw, transfer and can see balance funds in Blockchain. Program is written in Solidity version >=0.8.2 and have mapping between address and amount named balances have 3 events for updation of deposit,transfer and withdraw operations in blockchain and have 4 functions for deposit, transfer, withdraw and getBalance operations. Also this is for demonstration of error handling using require(), assert() and revert() functions.
 
 ## Description
 So, as mentioned before code has mapping, 3 events and 4 helper functions now get into its depth and know how the code is working.
 Firstly, mapping balances is mapping the account holder's address with it's funds amount present in his/her account. After that 3 events are defined which update the operations deposit, withdraw and tranfer in the blockchain. 
 ### In last 4 helper functions:
-1). deposit => It adds the deposited fund into the sender's address and emit it using Deposit event.
+1). deposit => It adds the deposited fund into the sender's address and emit it using Deposit event. It contains  require() function which checks if the address is present in the blockchain and if not then revert and display custom error.
+  
+2). withdraw => It withdraws the fund from the sender's address and emit it using Withdraw event. It contains require(), assert() and revert() functions which will check if address is present, balance is updated  and funds are available for withdrawl resp. and revert if false.
 
-2). withdraw => It withdraws the fund from the sender's address and emit it using Withdraw event.
-
-3). transfer => It adds the deposited fund into the reciever's address and withdraws it from sender's address and emit it using Transfer event.
+3). transfer => It adds the deposited fund into the reciever's address and withdraws it from sender's address and emit it using Transfer event. It contains require() and assert() functions which will check if address is present and balance is updated resp. and revert if false.
 
 4). getBalance => It returns the funds available at the provided address.
 
