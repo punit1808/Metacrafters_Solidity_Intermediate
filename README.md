@@ -3,7 +3,8 @@ This Project basically have a contract of Bank in which we can deposit, withdraw
 
 ## Description
 So, as mentioned before code has mapping, 3 events and 4 helper functions now get into its depth and know how the code is working.
-Firstly, mapping balances is mapping the account holder's address with it's funds amount present in his/her account. After that 3 events are defined which update the operations deposit, withdraw and tranfer in the blockchain. In last 4 helper functions:
+Firstly, mapping balances is mapping the account holder's address with it's funds amount present in his/her account. After that 3 events are defined which update the operations deposit, withdraw and tranfer in the blockchain. 
+# In last 4 helper functions:
 1). deposit => It adds the deposited fund into the sender's address and emit it using Deposit event.
 2). withdraw => It withdraws the fund from the sender's address and emit it using Withdraw event.
 3). transfer => It adds the deposited fund into the reciever's address and withdraws it from sender's address and emit it using Transfer event.
@@ -104,6 +105,9 @@ Command 5:
 const bank = await (await ethers.getContractFactory("Bank")).attach("0x5FbDB2315678afecb367f032d93F642f64180aa3") -> link the blockchain to program code
 
 After performing these steps we can call helper functions in program code and can perform tranfer, deposit, withdraw and getBalance.
+# Example for function calling : 
+await bank.deposit("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1)
 
 ### Thanks for Reading
-Have a Nice Day !!!
+I hope you Understand the program Code and functioning well.
+#Have a Nice Day !!!
