@@ -2,6 +2,7 @@
 pragma solidity >=0.8.2;
 
 contract Bank {
+
     mapping(address => uint) private balances;
 
     event Deposit(address indexed owner, uint amount);
@@ -18,7 +19,7 @@ contract Bank {
     }
 
     // Withdraw Funds Function
-    function withdraw(address _account, uint _number) public {
+    function withdraw(address _account, uint _number) public payable {
 
         require(_account != address(0), "Invalid account address");
         // require() -> revert if condition fails and display custom error message.
@@ -38,7 +39,7 @@ contract Bank {
     }
 
     // Transfer Funds Function
-    function transfer(address _from, address _to, uint _number) public {
+    function transfer(address _from, address _to, uint _number) public payable {
         require(_from != address(0), "Invalid Sender's Address");
         require(_to != address(0), "Invalid Receiver's Address");
         require(_from != _to, "Transfer to himself is not Allowed");
