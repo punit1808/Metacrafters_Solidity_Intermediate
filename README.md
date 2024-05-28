@@ -108,7 +108,7 @@ Command 5:
 const bank = await (await ethers.getContractFactory("Bank")).attach("0x5FbDB2315678afecb367f032d93F642f64180aa3") -> link the blockchain to program code
 
 After performing these steps we can call helper functions in program code and can perform tranfer, deposit, withdraw and getBalance.
-# Example for function calling : 
+## Example for function calling : 
 await bank.deposit("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1)
 
 ### Thanks for Reading
