@@ -1,64 +1,67 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.2;
 
-contract Bank {
-
-    mapping(address => uint) private balances;
-
-    event Deposit(address indexed owner, uint amount);
-    event Withdraw(address indexed owner, uint amount);
-    event Transfer(address indexed from, address indexed to, uint amount);
-
-    // Deposit Funds Function
-    function deposit(address _account, uint _number) public payable {
-
-        require(_account != address(0), "Invalid account address"); 
-        // require() -> revert if condition fails and display text we want to display as error
-        balances[_account] += _number;
-        emit Deposit(_account, _number);
+contract SchoolGradingSystem {
+    struct Student {
+        // user-defined datatype
+        string name;
+        uint class;
+        string grade;
     }
 
-    // Withdraw Funds Function
-    function withdraw(address _account, uint _number) public payable {
+    // Mapping between address and user-defined datatype named Student
+    mapping(address => Student) private students;
+    // Array to store address for different students
+    address[] private studentAddresses;
 
-        require(_account != address(0), "Invalid account address");
-        // require() -> revert if condition fails and display custom error message.
+    // Events to implement changes in nodes 
+    event StudentAdded(address indexed studentAddress, string name, uint class, string grade);
+    event StudentRemoved(address indexed studentAddress);
+    event GradeUpdated(address indexed studentAddress, string stuName, string oldGrade, string newGrade);
 
-        if (balances[_account] < _number) {
-            revert("Withdrawal failed: Insufficient balance");
-            // revert() -> revert the transaction and trigger an error with custom error message.
-        }
-
-        uint oldBalance = balances[_account];
-        balances[_account] -= _number;
-
-        assert(balances[_account] == oldBalance - _number);
+    // Function to add new Students data
+    function addStudent(address _stuAddress, string memory _stuName, uint _class, string memory _grade) public {
+        assert(bytes(students[_stuAddress].name).length == 0);
         // assert() -> If condition fails it will indicate a bug in the contract.
 
-        emit Withdraw(_account, _number);
+        students[_stuAddress] = Student(_stuName, _class, _grade);
+        studentAddresses.push(_stuAddress);
+
+        emit StudentAdded(_stuAddress, _stuName, _class, _grade);
     }
 
-    // Transfer Funds Function
-    function transfer(address _from, address _to, uint _number) public payable {
-        require(_from != address(0), "Invalid Sender's Address");
-        require(_to != address(0), "Invalid Receiver's Address");
-        require(_from != _to, "Transfer to himself is not Allowed");
-        require(balances[_from] >= _number, "Insufficient funds");
+    // Function to remove students data 
+    function removeStudent(address _stuAddress) public {
+        require(bytes(students[_stuAddress].name).length != 0, "Student does not exist.");
+        // require() -> revert if condition fails and display custom error message.
 
-        uint oldBalance_from = balances[_from];
-        uint oldBalance_to = balances[_to];
-        balances[_from] -= _number;
-        balances[_to] += _number;
+        delete students[_stuAddress];
 
-        assert(balances[_from] + _number == oldBalance_from);
-        assert(balances[_to] - _number == oldBalance_to);
-
-        emit Transfer(_from, _to, _number);
+        emit StudentRemoved(_stuAddress);
     }
 
-    // Balance Check Function
-    function getBalance(address _address) public view returns (uint) {
-        return balances[_address];
+    // Function to check student grades
+    function checkGrades(address _stuAddress) public view returns (string memory name, uint class, string memory grade) {
+
+        if(bytes(students[_stuAddress].name).length == 0){
+            revert("Student does not exist.");
+            // revert() -> revert the transaction and trigger an error with custom error message.
+        }
+        
+        Student memory student = students[_stuAddress];
+        return (student.name, student.class, student.grade);
     }
 
+    // Function to update grades of existing student
+    function updateGrades(address _stuAddress, string memory _newGrade) public {
+
+        require(bytes(students[_stuAddress].name).length != 0, "Student does not exist.");
+        // require() -> revert if condition fails and display custom error message.
+
+        string memory stuName = students[_stuAddress].name;
+        string memory oldGrade = students[_stuAddress].grade;
+        students[_stuAddress].grade = _newGrade;
+
+        emit GradeUpdated(_stuAddress, stuName, oldGrade, _newGrade);
+    }
 }
